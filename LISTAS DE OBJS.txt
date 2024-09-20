@@ -1,0 +1,62 @@
+
+    import java.util.ArrayList;
+    import java.util.Scanner;
+    
+    class Video {
+        private String titulo;
+        private String autor;
+        private String url;
+        private boolean activo;
+    
+        
+        public Video(String titulo, String autor, String url, boolean activo) {
+            this.titulo = titulo;
+            this.autor = autor;
+            this.url = url;
+            this.activo = activo;
+        }
+    //MOSTRAR INFORMACION
+        @Override
+        public String toString() {
+            return "Título: " + titulo + ", Autor: " + autor + ", URL: " + url + ", Activo: " + activo;
+        }
+    }
+    
+    public class Lista {
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            ArrayList<Video> listaVideos = new ArrayList<>(); 
+            String opcion;
+    //BUCLE
+            do {
+                
+                System.out.print("Ingrese el título del video: ");
+                String titulo = scanner.nextLine();
+    
+                System.out.print("Ingrese el autor del video: ");
+                String autor = scanner.nextLine();
+    
+                System.out.print("Ingrese la URL del video: ");
+                String url = scanner.nextLine();
+    
+                System.out.print("¿El video está activo? (S/N): ");
+                boolean activo = Boolean.parseBoolean(scanner.nextLine());
+    
+                Video video = new Video(titulo, autor, url, activo);
+                listaVideos.add(video);
+    
+                System.out.print("¿Desea agregar otro video? (S/N): ");
+                opcion = scanner.nextLine();
+    
+            } while (opcion.equalsIgnoreCase("S"));
+    
+    //IMPRIMIR DATOS
+            System.out.println("\nLista de videos creados:");
+            for (Video video : listaVideos) {
+                System.out.println(video);
+            }
+    
+            scanner.close();
+        }
+    }
+     
