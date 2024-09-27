@@ -1,0 +1,56 @@
+
+package stack;
+import java.util.Stack;
+import java.util.Scanner;
+public class STACK {
+
+    public static void main(String[] args) {
+        
+        Stack<String> pilaBoletos = new Stack<>();
+        Scanner scanner = new Scanner(System.in);
+
+        for (;;) { 
+            
+            System.out.println("\n---SISTEMAS BOLETOS---");
+            System.out.println("1 AGREGAR BOLETO");
+            System.out.println("2 VENDER BOLETO");
+            System.out.println("3 MOSTRAR BOLETOS");
+            System.out.println("4 SALIR");
+           
+            int opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("INGRESA EL NUMERO DEL BOLETO: ");
+                    String boleto = scanner.nextLine();
+                    System.out.println("BOLETO AGREGADO: " + boleto);
+                    pilaBoletos.push(boleto);
+                    break;
+                case 2:
+                    if (!pilaBoletos.isEmpty()) {
+                        String boletoVendido = pilaBoletos.pop();
+                        System.out.println("HBOLETO VENDIDO: " + boletoVendido);
+                    } else {
+                        System.out.println("NO HAY BOLETOS");
+                    }
+                    break;
+                case 3:
+                    if (!pilaBoletos.isEmpty()) {
+                        System.out.println("BOLETOS DISPONIBLES: " + pilaBoletos);
+                    } else {
+                        System.out.println("NO HAY BOLETOS");
+                    }
+                    break;
+                case 4:
+                    System.out.println("SALIENDO ");
+                    break;
+                default:
+                    System.out.println("NO EXISTE");
+            }
+            
+            if (opcion == 4) {
+                break;
+            }
+        }
+    }
+}
