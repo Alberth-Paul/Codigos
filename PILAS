@@ -1,0 +1,67 @@
+package pilas;
+
+import java.util.Scanner;
+import java.util.Stack;
+//CODIGO DE ALBERTH PAUL MARTINEZ LOPEZ
+public class PILAS {
+
+    public static boolean estaBalanceada(String expresion) {
+        Stack<Character> pila = new Stack<>();
+
+        for (char c : expresion.toCharArray()) {
+            //PARA MODIFICAR Y ARREGLAR LA PILA
+            if (c == '(' || c == '{' || c == '[') {
+                pila.push(c);
+                System.out.println("Agregado a la pila: " + c);
+                System.out.println("Pila actual: " + pila);
+            } 
+            
+            else if (c == ')' || c == '}' || c == ']') {
+               
+                if (pila.isEmpty()) {
+                    System.out.println("Error: Pila vacía cuando se encontró " + c);
+                    return false;
+                }
+                char tope = pila.pop();
+                System.out.println("Comparando: " + tope + " con " + c);
+                if (!coincideParentesis(tope, c)) {
+                    System.out.println("Error: No coinciden " + tope + " y " + c);
+                    return false;
+                }
+                System.out.println("Paréntesis coinciden: " + tope + " y " + c);
+                System.out.println("Pila después de eliminar: " + pila);
+            }
+        }
+
+        // SI LA PILA ESTA VACIA
+        if (pila.isEmpty()) {
+            System.out.println("La pila está vacía al final, la expresión está balanceada.");
+        } else {
+            System.out.println("La pila no está vacía al final: " + pila);
+        }
+
+        return pila.isEmpty();
+    }
+
+    private static boolean coincideParentesis(char apertura, char cierre) {
+        return (apertura == '(' && cierre == ')') ||
+               (apertura == '{' && cierre == '}') ||
+               (apertura == '[' && cierre == ']');
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingresa una expresión con paréntesis: ");
+        String expresion = scanner.nextLine();
+
+        if (estaBalanceada(expresion)) {
+            System.out.println("La expresión está balanceada.");
+        } else {
+            System.out.println("La expresión no está balanceada.");
+        }
+        scanner.close();
+    }
+}
+
+    
