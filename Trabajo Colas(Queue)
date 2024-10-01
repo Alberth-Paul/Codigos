@@ -1,0 +1,54 @@
+package tarea;
+
+import java.util.LinkedList;
+
+public class tareaa<T> {
+    private LinkedList<T> lista; // USE LinkedList PARA SIMULAR LA COLA
+
+    public tareaa() {
+        lista = new LinkedList<>();
+    }
+    public void select(T value) {
+        lista.add(value);
+    }
+    public T dequeue() {
+        return lista.isEmpty() ? null : lista.removeFirst();
+    }
+    public T peek() {
+        return lista.isEmpty() ? null : lista.getFirst();
+    }
+    public int count() {
+        return lista.size();
+    }
+    public void clear() {
+        lista.clear();
+    }
+    public T getFirst() {
+        return lista.isEmpty() ? null : lista.getFirst();
+    }
+    public T getLast() {
+        return lista.isEmpty() ? null : lista.getLast();
+    }
+    public LinkedList<T> getAll() {
+        return lista;
+    }
+    public static void main(String[] args) {
+        
+        tareaa<Object> lista = new tareaa<>();
+
+        lista.select("Paul");
+        lista.select(19);
+        lista.select(1.80);
+
+        System.out.println("Dequeue: " + lista.dequeue()); 
+        System.out.println("Peek: " + lista.peek()); 
+        System.out.println("Count: " + lista.count());
+        System.out.println("First: " + lista.getFirst()); 
+        System.out.println("Last: " + lista.getLast()); 
+        System.out.println("All: " + lista.getAll()); 
+
+        lista.clear();
+        System.out.println("Conteo total: " + lista.count()); 
+
+    }
+}
