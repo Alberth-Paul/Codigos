@@ -1,0 +1,21 @@
+
+package tarea;
+public class tareaa {
+
+    public static void main(String[] args) {
+        String cadena = "recursividad";
+        String cadenaInvertida = invertirCadena(cadena);
+        System.out.println(cadenaInvertida);  
+    }
+
+    public static String invertirCadena(String cadena) {
+       
+        if (cadena.length() <= 1) {
+            return cadena;
+        }
+        
+        return invertirCadena(cadena.substring(1)) + cadena.charAt(0);
+    }
+}
+
+
