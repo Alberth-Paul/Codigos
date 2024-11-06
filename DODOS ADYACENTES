@@ -1,0 +1,44 @@
+
+package dodos;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+public class Dodos {
+
+
+    public static void main(String[] args) {
+        
+        int[][] adjacencyMatrix = {
+            {1, 1, 1, 1, 0},
+            {1, 0, 0, 0, 0},
+            {1, 0, 0, 1, 1},
+            {0, 0, 1, 0, 0},
+            {0, 0, 1, 0, 0}
+        };
+
+        int vertices = adjacencyMatrix.length;
+        List<List<Integer>> adjacencyList = new ArrayList<>();
+
+        
+        for (int i = 0; i < vertices; i++) {
+            adjacencyList.add(new LinkedList<>());
+        }
+
+        for (int i = 0; i < vertices; i++) {
+            for (int j = 0; j < vertices; j++) {
+                if (adjacencyMatrix[i][j] != 0) {
+                    adjacencyList.get(i).add(j); 
+                }
+            }
+        }
+
+        for (int i = 0; i < vertices; i++) {
+            System.out.print("Nodo " + i + " -> ");
+            for (int j : adjacencyList.get(i)) {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
