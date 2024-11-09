@@ -1,0 +1,101 @@
+package arbol;
+public class Arbol {
+
+    public static void main(String[] args) {
+        
+        
+        ArbolBinario arbol = new ArbolBinario();
+         arbol.raiz = new Nodo(60);
+        arbol.raiz.izquierdo = new Nodo(41);
+        arbol.raiz.izquierdo.izquierdo = new Nodo(16);
+        arbol.raiz.izquierdo.derecho = new Nodo(53);
+        arbol.raiz.izquierdo.izquierdo.derecho = new Nodo(25);
+        arbol.raiz.izquierdo.derecho.izquierdo = new Nodo(46);
+        arbol.raiz.izquierdo.derecho.derecho = new Nodo(55);
+        arbol.raiz.izquierdo.derecho.izquierdo.izquierdo = new Nodo(42);
+        
+        arbol.raiz.derecho = new Nodo(74);
+        arbol.raiz.derecho.izquierdo= new Nodo(65);
+        arbol.raiz.derecho.izquierdo.izquierdo= new Nodo(63);
+        arbol.raiz.derecho.izquierdo.izquierdo.izquierdo= new Nodo(62);
+        arbol.raiz.derecho.izquierdo.izquierdo.derecho= new Nodo(70);
+        arbol.raiz.derecho.izquierdo.derecho= new Nodo(64);
+
+        int valorBuscado = 53;
+        int nivelNodo = arbol.nivel(valorBuscado);
+        int alturaArbol = arbol.altura();
+        int pesoArbol = arbol.peso();
+
+        System.out.println("Nivel del nodo " + valorBuscado + ": " + nivelNodo);
+        System.out.println("Altura del árbol: " + alturaArbol);
+        System.out.println("Peso del árbol: " + pesoArbol);
+    }
+}
+
+
+
+package arbol;
+
+class Nodo {
+    int valor;
+    Nodo izquierdo, derecho;
+
+    public Nodo(int valor) {
+        this.valor = valor;
+        izquierdo = derecho = null;
+    }
+}
+
+
+
+
+package arbol;
+class ArbolBinario {
+    Nodo raiz;
+
+    public int nivel(Nodo nodo, int valor, int nivelActual) {
+        if (nodo == null) {
+            return -1; 
+        }
+        if (nodo.valor == valor) {
+            return nivelActual;
+        }
+
+        int nivelIzquierdo = nivel(nodo.izquierdo, valor, nivelActual + 1);
+        if (nivelIzquierdo != -1) {
+            return nivelIzquierdo;
+        }
+
+        return nivel(nodo.derecho, valor, nivelActual + 1);
+    }
+
+    public int altura(Nodo nodo) {
+        
+        if (nodo == null) {
+            return 0;
+        }
+        int alturaIzquierda = altura(nodo.izquierdo);
+        int alturaDerecha = altura(nodo.derecho);
+        return Math.max(alturaIzquierda, alturaDerecha) + 1;
+    }
+
+    
+    public int peso(Nodo nodo) {
+        if (nodo == null) {
+            return 0;
+        }
+        return 1 + peso(nodo.izquierdo) + peso(nodo.derecho);
+    }
+
+    public int nivel(int valor) {
+        return nivel(raiz, valor, 0);
+    }
+
+    public int altura() {
+        return altura(raiz);
+    }
+
+    public int peso() {
+        return peso(raiz);
+    }
+}
