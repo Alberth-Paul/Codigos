@@ -1,0 +1,66 @@
+package arbol;
+public class Arbol {
+
+    public static void main(String[] args) {
+        
+        
+        ArbolBinario arbol = new ArbolBinario();
+        arbol.raiz = new Nodo(1);
+        arbol.raiz.izquierdo = new Nodo(2);
+        arbol.raiz.izquierdo.izquierdo = new Nodo(3);
+        arbol.raiz.izquierdo.derecho = new Nodo(4);
+        arbol.raiz.izquierdo.izquierdo.derecho = new Nodo(5);
+      
+        
+        System.out.println("Recorrido InOrden:");
+        arbol.recorridoInOrden(arbol.raiz);
+
+        System.out.println("\nRecorrido PosOrden:");
+        arbol.recorridoPosOrden(arbol.raiz);
+    }
+}
+package arbol;
+
+class Nodo {
+    int valor;
+    Nodo izquierdo, derecho;
+
+    public Nodo(int valor) {
+        this.valor = valor;
+        izquierdo = derecho = null;
+    }
+}
+
+package arbol;
+class ArbolBinario {
+    Nodo raiz;
+
+
+    public ArbolBinario() {
+        raiz = null;
+    }
+
+    public void recorridoInOrden(Nodo nodo) {
+        if (nodo != null) {
+            
+            recorridoInOrden(nodo.izquierdo);
+      
+            System.out.print(nodo.valor + " ");
+
+            recorridoInOrden(nodo.derecho);
+        }
+    }
+
+    public void recorridoPosOrden(Nodo nodo) {
+        if (nodo != null) {
+           
+            recorridoPosOrden(nodo.izquierdo);
+
+            recorridoPosOrden(nodo.derecho);
+
+            System.out.print(nodo.valor + " ");
+        }
+    }
+}
+
+    
