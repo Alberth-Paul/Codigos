@@ -1,0 +1,105 @@
+package dijkat;
+
+import java.util.*;
+
+public class DIJKAT {
+    
+    static class Grafo {
+        private Map<String, Map<String, Integer>> listaAdyacencia = new HashMap<>();
+
+        public void agregarArista(String ciudad1, String ciudad2, int distancia) {
+            listaAdyacencia.putIfAbsent(ciudad1, new HashMap<>());
+            listaAdyacencia.putIfAbsent(ciudad2, new HashMap<>());
+            listaAdyacencia.get(ciudad1).put(ciudad2, distancia);
+            listaAdyacencia.get(ciudad2).put(ciudad1, distancia);
+        }
+
+        
+        public Map<String, Integer> obtenerVecinos(String ciudad) {
+            return listaAdyacencia.getOrDefault(ciudad, new HashMap<>());
+        }
+
+        
+        public void dijkstra(String inicio, String destino) {
+            
+            Map<String, Integer> distancias = new HashMap<>();
+        
+            Map<String, String> ciudadesPrevias = new HashMap<>();
+      
+            PriorityQueue<Nodo> colaPrioridad = new PriorityQueue<>(Comparator.comparingInt(nodo -> nodo.distancia));
+            
+           
+            for (String ciudad : listaAdyacencia.keySet()) {
+                distancias.put(ciudad, Integer.MAX_VALUE);
+                ciudadesPrevias.put(ciudad, null);
+            }
+            distancias.put(inicio, 0);
+            colaPrioridad.add(new Nodo(inicio, 0));
+            
+            while (!colaPrioridad.isEmpty()) {
+                Nodo nodoActual = colaPrioridad.poll();
+                String ciudadActual = nodoActual.ciudad;
+                
+                if (ciudadActual.equals(destino)) break; 
+                
+                for (Map.Entry<String, Integer> entry : obtenerVecinos(ciudadActual).entrySet()) {
+                    String vecino = entry.getKey();
+                    int peso = entry.getValue();
+                    
+                    int nuevaDistancia = distancias.get(ciudadActual) + peso;
+                    if (nuevaDistancia < distancias.get(vecino)) {
+                        distancias.put(vecino, nuevaDistancia);
+                        ciudadesPrevias.put(vecino, ciudadActual);
+                        colaPrioridad.add(new Nodo(vecino, nuevaDistancia));
+                    }
+                }
+            }
+          
+            if (distancias.get(destino) == Integer.MAX_VALUE) {
+                System.out.println("No hay conexión posible entre " + inicio + " y " + destino);
+            } else {
+                System.out.println("Distancia más corta: " + distancias.get(destino));
+                System.out.print("Ruta: ");
+                imprimirCamino(ciudadesPrevias, destino);
+            }
+        }
+        private void imprimirCamino(Map<String, String> ciudadesPrevias, String ciudad) {
+            if (ciudad == null) {
+                return;
+            }
+            imprimirCamino(ciudadesPrevias, ciudadesPrevias.get(ciudad));
+            System.out.print(ciudad + " ");
+        }
+
+        static class Nodo {
+            String ciudad;
+            int distancia;
+
+            Nodo(String ciudad, int distancia) {
+                this.ciudad = ciudad;
+                this.distancia = distancia;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Grafo grafo = new Grafo();
+
+        grafo.agregarArista("A", "B", 4);
+        grafo.agregarArista("A", "C", 2);
+        grafo.agregarArista("B", "C", 5);
+        grafo.agregarArista("B", "D", 10);
+        grafo.agregarArista("C", "D", 3);
+
+        
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ciudad de inicio: ");
+        String inicio = scanner.nextLine().toUpperCase();
+        System.out.print("Ciudad de destino: ");
+        String destino = scanner.nextLine().toUpperCase();
+        
+        grafo.dijkstra(inicio, destino);
+
+       
+    }
+}
